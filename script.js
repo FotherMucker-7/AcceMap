@@ -2,6 +2,8 @@ const scriptURL = 'https://script.google.com/macros/s/AKfycbxccL4YlqqqG0VXorTL8n
 const container = document.getElementById('app-container');
 const form = document.getElementById('accemap-validator');
 
+let userEmailSaved = "anonimo";
+
 // 1. Lógica de LocalStorage: ¿Ya reportó antes?
 window.onload = () => {
     if (localStorage.getItem('accemap_user_reported')) {
@@ -40,16 +42,14 @@ function resetForm() {
 
 // 2. Compartir
 function shareAcceMap() {
-    // 1. Capturamos los datos básicos
-    const emailUsuario = document.querySelector('input[name="email"]')?.value || "anonimo";
-    const shareData = {
-        title: 'AcceMap',
-        text: 'Vi barreras de accesibilidad y las reporté en AcceMap. ¿Ayudarías tú también?',
-        url: window.location.href
-    };
+    const emailUsuario = userEmailSaved;
+    const shareUrl = window.location.href;
+    const shareText = `Vi barreras de accesibilidad y las reporté en AcceMap. ¿Ayudarías tú también?`;
 
-    // 2. RASTREO: Avisamos al Sheet que alguien hizo clic (Opcional pero recomendado)
-    // Esto envía una mini-petición al mismo script que ya tienes
+    // Formateamos el mensaje completo (Texto + 2 saltos de línea + URL)
+    const fullMessage = `${shareText}\n\n${shareUrl}`;
+
+    // RASTREO (Se mantiene igual, esto es sagrado)
     fetch(scriptURL, {
         method: 'POST',
         body: new URLSearchParams({
@@ -59,17 +59,66 @@ function shareAcceMap() {
         })
     });
 
-    // 3. EJECUCIÓN: La Web Share API
-    if (navigator.share) {
+    // DETECTAR SI ES MOBILE O DESKTOP
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || window.innerWidth <= 768;
+
+    if (isMobile && navigator.share) {
+        // MOBILE: Usar Share API nativa (funciona perfecto)
+        const shareData = {
+            title: 'AcceMap',
+            text: fullMessage,
+            url: shareUrl
+        };
+
         navigator.share(shareData)
-            .then(() => console.log('Menú compartido abierto'))
-            .catch((err) => console.log('El usuario canceló el compartido'));
+            .then(() => console.log('Ventana compartida abierta'))
+            .catch((err) => {
+                // Si el usuario cancela, no hacemos nada intrusivo
+                console.log('Compartir cancelado o fallido');
+            });
     } else {
-        // Respaldo para Desktop
-        navigator.clipboard.writeText(shareData.url).then(() => {
-            alert('¡Link copiado! Pégalo en tus redes para ayudarnos.');
-        });
+        // DESKTOP: Abrir WhatsApp Web directamente con el mensaje completo
+        const whatsappMessage = encodeURIComponent(fullMessage);
+        const whatsappUrl = `https://web.whatsapp.com/send?text=${whatsappMessage}`;
+
+        // Abrir en nueva pestaña
+        window.open(whatsappUrl, '_blank');
+
+        // Feedback visual para el usuario
+        const shareBtn = document.querySelector('button[onclick="shareAcceMap()"]');
+        if (shareBtn) {
+            const originalText = shareBtn.innerHTML;
+            shareBtn.innerHTML = "✅ ¡WhatsApp Web abierto!";
+            shareBtn.style.background = "var(--am-accent)";
+            shareBtn.style.color = "var(--am-primary)";
+
+            setTimeout(() => {
+                shareBtn.innerHTML = originalText;
+                shareBtn.style.background = "#fff";
+                shareBtn.style.color = "#000";
+            }, 3000);
+        }
     }
+}
+
+// Función auxiliar para no repetir código y evitar el alert feo
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        // En lugar de un alert, cambiaremos el texto del botón temporalmente
+        // Esto es MUCHO más profesional (Feedback Visual No Invasivo)
+        const shareBtn = document.querySelector('button[onclick="shareAcceMap()"]');
+        const originalText = shareBtn.innerHTML;
+        shareBtn.innerHTML = "✅ ¡Link copiado! Pégalo donde quieras";
+        shareBtn.style.background = "var(--am-accent)";
+        shareBtn.style.color = "var(--am-primary)";
+
+        setTimeout(() => {
+            shareBtn.innerHTML = originalText;
+            shareBtn.style.background = "#fff";
+            shareBtn.style.color = "#000";
+        }, 3000);
+    });
 }
 
 // 3. Navegación entre pasos
@@ -85,6 +134,7 @@ function nextStep(step, val) {
 // 4. Envío de datos
 form.addEventListener('submit', e => {
     e.preventDefault();
+    userEmailSaved = form.querySelector('input[name="email"]').value; // GUARDAMOS EL EMAIL
     const btn = document.getElementById('submit-btn');
     btn.innerText = 'ENVIANDO...';
     btn.disabled = true;
