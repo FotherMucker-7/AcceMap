@@ -8,166 +8,10 @@
     <!-- La fuente que elegiste es ley en accesibilidad -->
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
         rel="stylesheet">
-    <style>
-        :root {
-            --am-primary: #2e0249;
-            /* Violeta Oscuro */
-            --am-secondary: #570a57;
-            --am-accent: #00ff85;
-            /* Verde Neón */
-            --am-text: #f8fafc;
-            --am-bg: #0f172a;
-            --font-main: 'Atkinson Hyperlegible', sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-main);
-            background-color: var(--am-bg);
-            color: var(--am-text);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .card {
-            background: var(--am-primary);
-            width: 100%;
-            max-width: 500px;
-            margin: 20px;
-            padding: 2.5rem;
-            border-radius: 2rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1.5rem;
-            border-radius: 50%;
-            border: 2px solid var(--am-accent);
-        }
-
-        h1 {
-            font-size: 2rem;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-
-        p {
-            color: #cbd5e1;
-            line-height: 1.5;
-            margin-bottom: 2rem;
-        }
-
-        .step {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .step.active {
-            display: block;
-        }
-
-        /* Botones de Micro-reporte */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .btn-choice {
-            background: var(--am-secondary);
-            border: 2px solid transparent;
-            color: white;
-            padding: 1rem;
-            border-radius: 1rem;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.2s;
-            text-align: center;
-        }
-
-        .btn-choice:hover {
-            border-color: var(--am-accent);
-            transform: translateY(-2px);
-        }
-
-        /* Estilo para las preguntas de selección */
-        label {
-            display: block;
-            margin-bottom: 1rem;
-            font-weight: bold;
-            color: var(--am-accent);
-        }
-
-        select,
-        input,
-        textarea {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0.8rem;
-            border: none;
-            background: #1e293b;
-            color: white;
-            font-family: var(--font-main);
-            font-size: 1rem;
-        }
-
-        .btn-next {
-            background: var(--am-accent);
-            color: var(--am-primary);
-            border: none;
-            width: 100%;
-            padding: 1.2rem;
-            border-radius: 1rem;
-            font-weight: 800;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .progress {
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--am-accent);
-            width: 25%;
-            transition: 0.3s;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
-    <!-- ... (Mantener los estilos CSS anteriores, solo actualizaré el cuerpo y el script) ... -->
 
     <div class="card" id="app-container">
         <div class="progress">
@@ -196,8 +40,8 @@
 
             <!-- PASO 2: VALIDACIÓN (Ajustada para víctimas y aliados) -->
             <div class="step" id="step2">
-                <label>En tu experiencia, ¿qué tan difícil es encontrar información confiable sobre rampas o
-                    ascensores?</label>
+                <label>En tu experiencia, ¿qué tan difícil es encontrar información confiable sobre la accesibilidad en
+                    tu entorno?</label>
                 <select name="difficulty" required>
                     <option value="" disabled selected>Selecciona una opción</option>
                     <option value="1">Es fácil, siempre hay datos</option>
@@ -228,68 +72,7 @@
         </form>
     </div>
 
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxccL4YlqqqG0VXorTL8nAc4_WVkl9YADIm_gpB-AeO5vjDHgauFxgxfNYm1nw7AuUR/exec';
-        const container = document.getElementById('app-container');
-        const form = document.getElementById('accemap-validator');
-
-        // 1. Lógica de LocalStorage: ¿Ya reportó antes?
-        window.onload = () => {
-            if (localStorage.getItem('accemap_user_reported')) {
-                showThankYouMessage(true);
-            }
-        };
-
-        function showThankYouMessage(isRepeat) {
-            const message = isRepeat
-                ? "¡Hola de nuevo, guardián! Ya tenemos tu reporte anterior."
-                : "¡Gracias por tu reporte!";
-
-            container.innerHTML = `
-            <div style="text-align:center">
-                <h1 style="color:var(--am-accent)">${message}</h1>
-                <p>Tu aporte ayuda a crear una ciudad sin barreras.</p>
-                <button class="btn-next" onclick="resetForm()">Reportar otra barrera</button>
-                <br><br>
-                <img src="https://i.ibb.co/X7fFmGj/Logo-Acce-Map.png" width="80">
-            </div>
-        `;
-        }
-
-        function resetForm() {
-            localStorage.removeItem('accemap_user_reported');
-            location.reload();
-        }
-
-        // 2. Navegación entre pasos
-        let currentStep = 1;
-        function nextStep(step, val) {
-            if (val) document.getElementById('issue-input').value = val;
-            document.getElementById('step' + step).classList.remove('active');
-            currentStep++;
-            document.getElementById('step' + currentStep).classList.add('active');
-            document.getElementById('progress').style.width = (currentStep * 33) + '%';
-        }
-
-        // 3. Envío de datos
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            const btn = document.getElementById('submit-btn');
-            btn.innerText = 'ENVIANDO...';
-            btn.disabled = true;
-
-            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                .then(response => {
-                    localStorage.setItem('accemap_user_reported', 'true');
-                    showThankYouMessage(false);
-                })
-                .catch(error => {
-                    alert('Error de conexión. Inténtalo de nuevo.');
-                    btn.disabled = false;
-                    btn.innerText = 'FINALIZAR Y REPORTAR';
-                });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>
