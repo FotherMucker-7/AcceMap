@@ -155,6 +155,12 @@ form.addEventListener('submit', e => {
         .then(response => {
             localStorage.setItem('accemap_user_reported', 'true');
             localStorage.setItem('accemap_user_email', userEmailSaved); // Guardar email en localStorage
+
+            // Tracking de Vercel Analytics: Reporte completado
+            if (window.va) {
+                window.va('event', { name: 'reporte_completado' });
+            }
+
             showThankYouMessage(false);
         })
         .catch(error => {
