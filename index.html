@@ -68,81 +68,84 @@
 
 <body>
 
-    <div class="card" id="app-container" aria-live="polite" aria-atomic="true">
-        <div class="progress">
-            <div class="progress-bar" id="progress"></div>
-        </div>
-        <p id="step-indicator"
-            style="text-align: center; color: #cbd5e1; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1.5rem;">
-            Paso <span id="current-step">1</span> de 3
-        </p>
+    <main>
+        <div class="card" id="app-container" aria-live="polite" aria-atomic="true">
+            <div class="progress">
+                <div class="progress-bar" id="progress"></div>
+            </div>
+            <p id="step-indicator"
+                style="text-align: center; color: #cbd5e1; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1.5rem;">
+                Paso <span id="current-step">1</span> de 3
+            </p>
 
-        <form id="accemap-validator">
-            <!-- PASO 1: HERO + CATARSIS (Para todos) -->
-            <div class="step active" id="step1">
-                <img src="logo.png" alt="Logo AcceMap" class="logo" loading="lazy">
-                <h1>No dejes que la ciudad detenga a nadie.</h1>
-                <p>¿Has visto alguna barrera de accesibilidad en la ciudad últimamente? Elígela abajo:</p>
-                <div class="grid">
-                    <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Ascensor malo')"
-                        aria-label="Un ascensor malo">🚫 Ascensor malo</div>
-                    <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Rampa bloqueada')"
-                        aria-label="Una rampa bloqueada">♿ Rampa bloqueada</div>
-                    <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Baño no apto')"
-                        aria-label="Un baño no apto">🚻 Baño no apto</div>
-                    <div class="btn-choice" role="button" tabindex="0"
-                        onclick="nextStep(1, 'Falta de estacionamiento PcD')"
-                        aria-label="Sin estacionamiento para personas con discapacidad">🅿️ Falta de
-                        estacionamiento PcD</div>
-                    <button type="button" class="btn-choice" onclick="nextStep(1, 'Vereda en mal estado')"
-                        aria-label="Una vereda en mal estado">🚜 Vereda
-                        rota</button>
-                    <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Otro')"
-                        aria-label="Otra barrera de accesibilidad">🚧 Otra barrera</div>
+            <form id="accemap-validator">
+                <!-- PASO 1: HERO + CATARSIS (Para todos) -->
+                <div class="step active" id="step1">
+                    <img src="logo.png" alt="Logo AcceMap" class="logo" loading="lazy">
+                    <h1>No dejes que la ciudad detenga a nadie.</h1>
+                    <p>¿Has visto alguna barrera de accesibilidad en la ciudad últimamente? Elígela abajo:</p>
+                    <div class="grid">
+                        <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Ascensor malo')"
+                            aria-label="Un ascensor malo">🚫 Ascensor malo</div>
+                        <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Rampa bloqueada')"
+                            aria-label="Una rampa bloqueada">♿ Rampa bloqueada</div>
+                        <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Baño no apto')"
+                            aria-label="Un baño no apto">🚻 Baño no apto</div>
+                        <div class="btn-choice" role="button" tabindex="0"
+                            onclick="nextStep(1, 'Falta de estacionamiento PcD')"
+                            aria-label="Sin estacionamiento para personas con discapacidad">🅿️ Falta de
+                            estacionamiento PcD</div>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Vereda en mal estado')"
+                            aria-label="Una vereda en mal estado">🚜 Vereda
+                            rota</button>
+                        <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Otro')"
+                            aria-label="Otra barrera de accesibilidad">🚧 Otra barrera</div>
+                    </div>
+                    <input type="hidden" name="issue" id="issue-input">
                 </div>
-                <input type="hidden" name="issue" id="issue-input">
-            </div>
 
-            <!-- PASO 2: VALIDACIÓN (Ajustada para víctimas y aliados) -->
-            <div class="step" id="step2">
-                <label for="difficulty-select">En tu experiencia, ¿qué tan difícil es encontrar información confiable
-                    sobre la accesibilidad en
-                    tu entorno?</label>
-                <select id="difficulty-select" name="difficulty" required aria-required="true">
-                    <option value="" disabled selected>Selecciona una opción</option>
-                    <option value="1">Es fácil, siempre hay datos</option>
-                    <option value="3">Es frustrante, hay que adivinar</option>
-                    <option value="5">Es una pesadilla, no hay información</option>
-                </select>
+                <!-- PASO 2: VALIDACIÓN (Ajustada para víctimas y aliados) -->
+                <div class="step" id="step2">
+                    <label for="difficulty-select">En tu experiencia, ¿qué tan difícil es encontrar información
+                        confiable
+                        sobre la accesibilidad en
+                        tu entorno?</label>
+                    <select id="difficulty-select" name="difficulty" required aria-required="true">
+                        <option value="" disabled selected>Selecciona una opción</option>
+                        <option value="1">Es fácil, siempre hay datos</option>
+                        <option value="3">Es frustrante, hay que adivinar</option>
+                        <option value="5">Es una pesadilla, no hay información</option>
+                    </select>
 
-                <label for="would-use-select">¿Crees que un mapa colaborativo ayudaría a mejorar la movilidad en tu
-                    ciudad?</label>
-                <select id="would-use-select" name="would_use" required aria-required="true">
-                    <option value="si">¡Absolutamente!</option>
-                    <option value="talvez">Podría servir</option>
-                    <option value="no">No lo creo necesario</option>
-                </select>
+                    <label for="would-use-select">¿Crees que un mapa colaborativo ayudaría a mejorar la movilidad en tu
+                        ciudad?</label>
+                    <select id="would-use-select" name="would_use" required aria-required="true">
+                        <option value="si">¡Absolutamente!</option>
+                        <option value="talvez">Podría servir</option>
+                        <option value="no">No lo creo necesario</option>
+                    </select>
 
-                <button type="button" class="btn-next" onclick="nextStep(2)">Continuar</button>
-            </div>
+                    <button type="button" class="btn-next" onclick="nextStep(2)">Continuar</button>
+                </div>
 
-            <!-- PASO 3: CONVERSIÓN -->
-            <div class="step" id="step3">
-                <label for="vent-textarea">¿Viste algo que te molestó o quieres contarnos por qué te importa la
-                    accesibilidad?</label>
-                <textarea id="vent-textarea" name="vent" rows="3"
-                    placeholder="Tu historia ayuda a visibilizar el problema..."
-                    aria-label="Cuéntanos tu experiencia sobre accesibilidad"></textarea>
+                <!-- PASO 3: CONVERSIÓN -->
+                <div class="step" id="step3">
+                    <label for="vent-textarea">¿Viste algo que te molestó o quieres contarnos por qué te importa la
+                        accesibilidad?</label>
+                    <textarea id="vent-textarea" name="vent" rows="3"
+                        placeholder="Tu historia ayuda a visibilizar el problema..."
+                        aria-label="Cuéntanos tu experiencia sobre accesibilidad"></textarea>
 
-                <label for="email-input">Únete a la red de validadores. Déjanos tu email para avisarte cuando
-                    lancemos:</label>
-                <input id="email-input" type="email" name="email" placeholder="tu@email.com" required
-                    aria-required="true" aria-label="Tu correo electrónico">
+                    <label for="email-input">Únete a la red de validadores. Déjanos tu email para avisarte cuando
+                        lancemos:</label>
+                    <input id="email-input" type="email" name="email" placeholder="tu@email.com" required
+                        aria-required="true" aria-label="Tu correo electrónico">
 
-                <button type="submit" class="btn-next" id="submit-btn">Finalizar y Reportar</button>
-            </div>
-        </form>
-    </div>
+                    <button type="submit" class="btn-next" id="submit-btn">Finalizar y Reportar</button>
+                </div>
+            </form>
+        </div>
+    </main>
 
     <script src="script.js"></script>
 
