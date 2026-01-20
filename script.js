@@ -19,8 +19,8 @@ window.onload = () => {
 
 function showThankYouMessage(isRepeat) {
     const message = isRepeat
-        ? "¡Hola de nuevo, guardián! Ya tenemos tu reporte anterior."
-        : "¡Gracias por tu reporte!";
+        ? "¡Hola de nuevo, guardián! Ya tenemos tus respuestas anteriores."
+        : "¡Gracias por tus respuestas!";
 
     container.innerHTML = `
                 <div style="text-align:center; animation: fadeIn 0.5s;">
