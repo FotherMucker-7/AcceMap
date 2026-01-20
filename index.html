@@ -6,15 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AcceMap | Tu ciudad sin barreras</title>
 
+    <!-- Meta Description para SEO -->
+    <meta name="description"
+        content="Reporta barreras de accesibilidad en tu ciudad y ayuda a validar un mapa colaborativo. Juntos creamos una ciudad sin barreras para todos.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://accemap.vercel.app/">
+
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://accemap.vercel.app/">
     <meta property="og:title" content="AcceMap | No dejes que la ciudad detenga a nadie">
     <meta property="og:description" content="Reporta barreras de accesibilidad y ayuda a mapear una ciudad para todos.">
-    <meta property="og:image" content="og_image.png">
+    <meta property="og:image" content="https://accemap.vercel.app/og_image3.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AcceMap | No dejes que la ciudad detenga a nadie">
+    <meta name="twitter:description"
+        content="Reporta barreras de accesibilidad y ayuda a mapear una ciudad para todos.">
+    <meta name="twitter:image" content="https://accemap.vercel.app/og_image3.png">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo_2.png">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "AcceMap",
+        "description": "Plataforma colaborativa para reportar y mapear barreras de accesibilidad en la ciudad",
+        "url": "https://accemap.vercel.app/",
+        "applicationCategory": "UtilitiesApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "operatingSystem": "Web Browser",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "featureList": [
+            "Reportar barreras de accesibilidad",
+            "Validación colaborativa de datos",
+            "Mapa interactivo de accesibilidad"
+        ],
+        "audience": {
+            "@type": "Audience",
+            "audienceType": "Personas con discapacidad, cuidadores, y aliados de la accesibilidad"
+        }
+    }
+    </script>
 
     <!-- La fuente que elegiste es ley en accesibilidad -->
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
@@ -24,44 +68,56 @@
 
 <body>
 
-    <div class="card" id="app-container">
+    <div class="card" id="app-container" aria-live="polite" aria-atomic="true">
         <div class="progress">
             <div class="progress-bar" id="progress"></div>
         </div>
+        <p id="step-indicator"
+            style="text-align: center; color: #cbd5e1; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1.5rem;">
+            Paso <span id="current-step">1</span> de 3
+        </p>
 
         <form id="accemap-validator">
             <!-- PASO 1: HERO + CATARSIS (Para todos) -->
             <div class="step active" id="step1">
-                <img src="logo.png" alt="Logo" class="logo">
+                <img src="logo.png" alt="Logo AcceMap" class="logo" loading="lazy">
                 <h1>No dejes que la ciudad detenga a nadie.</h1>
-                <p>¿Has visto alguna barrera de accesibilidad en la ciudad últimamente? Elígela abajo para mapear la
-                    falta de accesibilidad:</p>
+                <p>¿Has visto alguna barrera de accesibilidad en la ciudad últimamente? Elígela abajo:</p>
                 <div class="grid">
-                    <div class="btn-choice" onclick="nextStep(1, 'Ascensor malo')">🚫 Ascensor malo</div>
-                    <div class="btn-choice" onclick="nextStep(1, 'Rampa bloqueada')">♿ Rampa bloqueada</div>
-                    <div class="btn-choice" onclick="nextStep(1, 'Baño no apto')">🚻 Baño no apto</div>
-                    <div class="btn-choice" onclick="nextStep(1, 'Falta de estacionamiento PcD')">🅿️ Falta de
+                    <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Ascensor malo')"
+                        aria-label="Un ascensor malo">🚫 Ascensor malo</div>
+                    <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Rampa bloqueada')"
+                        aria-label="Una rampa bloqueada">♿ Rampa bloqueada</div>
+                    <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Baño no apto')"
+                        aria-label="Un baño no apto">🚻 Baño no apto</div>
+                    <div class="btn-choice" role="button" tabindex="0"
+                        onclick="nextStep(1, 'Falta de estacionamiento PcD')"
+                        aria-label="Sin estacionamiento para personas con discapacidad">🅿️ Falta de
                         estacionamiento PcD</div>
-                    <button type="button" class="btn-choice" onclick="nextStep(1, 'Vereda en mal estado')">🚜 Vereda
+                    <button type="button" class="btn-choice" onclick="nextStep(1, 'Vereda en mal estado')"
+                        aria-label="Una vereda en mal estado">🚜 Vereda
                         rota</button>
-                    <div class="btn-choice" onclick="nextStep(1, 'Otro')">🚧 Otra barrera</div>
+                    <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Otro')"
+                        aria-label="Otra barrera de accesibilidad">🚧 Otra barrera</div>
                 </div>
                 <input type="hidden" name="issue" id="issue-input">
             </div>
 
             <!-- PASO 2: VALIDACIÓN (Ajustada para víctimas y aliados) -->
             <div class="step" id="step2">
-                <label>En tu experiencia, ¿qué tan difícil es encontrar información confiable sobre la accesibilidad en
+                <label for="difficulty-select">En tu experiencia, ¿qué tan difícil es encontrar información confiable
+                    sobre la accesibilidad en
                     tu entorno?</label>
-                <select name="difficulty" required>
+                <select id="difficulty-select" name="difficulty" required aria-required="true">
                     <option value="" disabled selected>Selecciona una opción</option>
                     <option value="1">Es fácil, siempre hay datos</option>
                     <option value="3">Es frustrante, hay que adivinar</option>
                     <option value="5">Es una pesadilla, no hay información</option>
                 </select>
 
-                <label>¿Crees que un mapa colaborativo ayudaría a mejorar la movilidad en tu ciudad?</label>
-                <select name="would_use" required>
+                <label for="would-use-select">¿Crees que un mapa colaborativo ayudaría a mejorar la movilidad en tu
+                    ciudad?</label>
+                <select id="would-use-select" name="would_use" required aria-required="true">
                     <option value="si">¡Absolutamente!</option>
                     <option value="talvez">Podría servir</option>
                     <option value="no">No lo creo necesario</option>
@@ -72,11 +128,16 @@
 
             <!-- PASO 3: CONVERSIÓN -->
             <div class="step" id="step3">
-                <label>¿Viste algo que te molestó o quieres contarnos por qué te importa la accesibilidad?</label>
-                <textarea name="vent" rows="3" placeholder="Tu historia ayuda a visibilizar el problema..."></textarea>
+                <label for="vent-textarea">¿Viste algo que te molestó o quieres contarnos por qué te importa la
+                    accesibilidad?</label>
+                <textarea id="vent-textarea" name="vent" rows="3"
+                    placeholder="Tu historia ayuda a visibilizar el problema..."
+                    aria-label="Cuéntanos tu experiencia sobre accesibilidad"></textarea>
 
-                <label>Únete a la red de validadores. Déjanos tu email para avisarte cuando lancemos:</label>
-                <input type="email" name="email" placeholder="tu@email.com" required>
+                <label for="email-input">Únete a la red de validadores. Déjanos tu email para avisarte cuando
+                    lancemos:</label>
+                <input id="email-input" type="email" name="email" placeholder="tu@email.com" required
+                    aria-required="true" aria-label="Tu correo electrónico">
 
                 <button type="submit" class="btn-next" id="submit-btn">Finalizar y Reportar</button>
             </div>

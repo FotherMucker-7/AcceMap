@@ -6,6 +6,12 @@ let userEmailSaved = "anonimo";
 
 // 1. Lógica de LocalStorage: ¿Ya reportó antes?
 window.onload = () => {
+    // Recuperar el email guardado si existe
+    const savedEmail = localStorage.getItem('accemap_user_email');
+    if (savedEmail) {
+        userEmailSaved = savedEmail;
+    }
+
     if (localStorage.getItem('accemap_user_reported')) {
         showThankYouMessage(true);
     }
@@ -129,6 +135,12 @@ function nextStep(step, val) {
     currentStep++;
     document.getElementById('step' + currentStep).classList.add('active');
     document.getElementById('progress').style.width = (currentStep * 33) + '%';
+
+    // Actualizar indicador de paso
+    const stepIndicatorSpan = document.getElementById('current-step');
+    if (stepIndicatorSpan) {
+        stepIndicatorSpan.textContent = currentStep;
+    }
 }
 
 // 4. Envío de datos
@@ -142,6 +154,7 @@ form.addEventListener('submit', e => {
     fetch(scriptURL, { method: 'POST', body: new FormData(form) })
         .then(response => {
             localStorage.setItem('accemap_user_reported', 'true');
+            localStorage.setItem('accemap_user_email', userEmailSaved); // Guardar email en localStorage
             showThankYouMessage(false);
         })
         .catch(error => {
@@ -149,4 +162,42 @@ form.addEventListener('submit', e => {
             btn.disabled = false;
             btn.innerText = 'FINALIZAR Y REPORTAR';
         });
+});
+
+// 5. Accesibilidad: Navegación por teclado para botones de selección
+document.addEventListener('DOMContentLoaded', () => {
+    // Agregar soporte de Enter y Space para todos los botones .btn-choice
+    document.addEventListener('keydown', (e) => {
+        if (e.target.classList.contains('btn-choice') && e.target.hasAttribute('role')) {
+            // Enter (código 13) o Espacio (código 32)
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault(); // Prevenir scroll con espacio
+                e.target.click(); // Simular click
+            }
+        }
+    });
+
+    // 6. Validación en tiempo real del email
+    const emailInput = document.getElementById('email-input');
+    if (emailInput) {
+        emailInput.addEventListener('input', (e) => {
+            const email = e.target.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (email.length > 0) {
+                if (emailRegex.test(email)) {
+                    // Email válido
+                    emailInput.style.borderColor = 'var(--am-accent)';
+                    emailInput.style.outline = 'none';
+                } else {
+                    // Email inválido
+                    emailInput.style.borderColor = '#ef4444';
+                    emailInput.style.outline = 'none';
+                }
+            } else {
+                // Campo vacío, resetear estilo
+                emailInput.style.borderColor = '';
+            }
+        });
+    }
 });
