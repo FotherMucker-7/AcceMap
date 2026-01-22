@@ -87,21 +87,20 @@
 
                     <div class="grid" role="group" aria-labelledby="hero-description"
                         aria-label="Selecciona el tipo de lugar que buscas">
-                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Cafe')"
-                            aria-label="Buscar cafeterías accesibles">☕ Un café</button>
-                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Restaurante')"
-                            aria-label="Buscar restaurantes accesibles">🍽️ Un
-                            restaurante</button>
-                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Tramites')"
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Cafeterías')"
+                            aria-label="Buscar cafeterías accesibles">☕ Cafeterías</button>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Restaurantes')"
+                            aria-label="Buscar restaurantes accesibles">🍽️ Restaurantes</button>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Trámites y Bancos')"
                             aria-label="Buscar oficinas de trámites y bancos accesibles">🗄️ Trámites /
                             Bancos</button>
-                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Cultura')"
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Cultura y Cine')"
                             aria-label="Buscar lugares culturales y cines accesibles">🎭 Cultura /
                             Cine</button>
-                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Salud')"
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Salud y Clínicas')"
                             aria-label="Buscar centros de salud y clínicas accesibles">🏥 Salud /
                             Clínicas</button>
-                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Explorar')"
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Parques y Plazas')"
                             aria-label="Buscar parques y plazas accesibles">🗺️ Parques y
                             Plazas</button>
                     </div>
@@ -126,10 +125,10 @@
                             aria-required="true" aria-labelledby="preocupacion-label"
                             aria-describedby="preocupacion-hint">
                             <option value="" disabled selected>Selecciona tu mayor preocupación</option>
-                            <option value="escalon">Encontrarme con escalones imprevistos</option>
-                            <option value="banio">Que el baño no sea realmente apto</option>
-                            <option value="espacio">Que el lugar sea muy estrecho</option>
-                            <option value="personal">La actitud del personal del lugar</option>
+                            <option value="escalones_imprevistos">Encontrarme con escalones imprevistos</option>
+                            <option value="banio_no_apto">Que el baño no sea realmente apto</option>
+                            <option value="espacio_estrecho">Que el lugar sea muy estrecho</option>
+                            <option value="personal_actitud">La actitud del personal del lugar</option>
                         </select>
                         <span id="preocupacion-hint" class="sr-only"
                             style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo
@@ -147,10 +146,10 @@
                         <select id="metodo-actual" name="alternativa" class="form-select" required aria-required="true"
                             aria-labelledby="metodo-label" aria-describedby="metodo-hint">
                             <option value="" disabled selected>Selecciona cómo lo resuelves hoy</option>
-                            <option value="telefono">Llamo por teléfono antes de salir</option>
-                            <option value="google">Reviso fotos en Google / Street View</option>
-                            <option value="evitacion">Solo voy a lugares que ya conozco</option>
-                            <option value="riesgo">Me arriesgo y voy a ver qué pasa</option>
+                            <option value="llamo_busco_antes">Llamo o busco en redes antes de salir</option>
+                            <option value="google_fotos">Reviso fotos en Google / Street View</option>
+                            <option value="lugares_conocidos">Solo voy a lugares que ya conozco</option>
+                            <option value="me_arriesgo">Me arriesgo y voy a ver qué pasa</option>
                         </select>
                         <span id="metodo-hint" class="sr-only"
                             style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo

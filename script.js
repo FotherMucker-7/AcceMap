@@ -81,11 +81,12 @@ function shareAcceMap() {
         || window.innerWidth <= 768;
 
     if (isMobile && navigator.share) {
-        // MOBILE: Usar Share API nativa (funciona perfecto)
+        // MOBILE: Usar Share API nativa
+        // Solo usamos 'text' porque ya incluye la URL al final.
+        // Si incluimos 'url' como parámetro separado, algunos navegadores lo duplican.
         const shareData = {
             title: 'AcceMap',
-            text: fullMessage,
-            url: shareUrl
+            text: fullMessage
         };
 
         navigator.share(shareData)
