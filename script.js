@@ -18,27 +18,38 @@ window.onload = () => {
 };
 
 function showThankYouMessage(isRepeat) {
-    const message = isRepeat
-        ? "¡Hola de nuevo, guardián! Ya tenemos tus respuestas anteriores."
-        : "¡Gracias por tus respuestas!";
+    // Definimos los mensajes basados en el nuevo enfoque de Design Thinking
+    const title = isRepeat
+        ? "¡Hola de nuevo, guardián de la libertad!"
+        : "¡Todo listo! Tu próxima salida será mejor.";
+
+    const body = isRepeat
+        ? "Ya registramos tus nuevas sugerencias. Estamos mapeando la ciudad gracias a tu insistencia."
+        : "Hemos recibido tus lugares. Muy pronto verificaremos que sean 100% accesibles para que salgas con total autonomía.";
 
     container.innerHTML = `
-                <div style="text-align:center; animation: fadeIn 0.5s;">
-                    <h1 style="color:var(--am-accent)">${message}</h1>
-                    <p>Tu aporte ayuda a crear una ciudad sin barreras.</p>
-                    
-                    <!-- Botón de Compartir -->
-                    <button class="btn-next" onclick="shareAcceMap()" style="background:#fff; color:#000; margin-bottom:10px;">
-                        📢 Compartir con un amigo
-                    </button>
+        <div style="text-align:center; animation: fadeIn 0.5s;">
+            <h1 style="color:var(--am-accent); font-size: 1.8rem;">${title}</h1>
+            <p style="color:#cbd5e1; margin-bottom: 2rem;">${body}</p>
+            
+            <!-- Botón de Compartir (Viral Loop) -->
+            <button class="btn-next" onclick="shareAcceMap()" 
+                style="background:#fff; color:#000; margin-bottom:12px;"
+                aria-label="Compartir esta iniciativa con tus contactos">
+                📢 Invitar a un aliado
+            </button>
 
-                    <button class="btn-next" onclick="resetForm()">
-                        Reportar otra barrera
-                    </button>
-                    <br><br>
-                    <img src="logo.png" width="80">
-                </div>
-            `;
+            <!-- Botón de Acción Repetida (Engagement) -->
+            <button class="btn-next" onclick="resetForm()"
+                style="background: transparent; border: 2px solid var(--am-accent); color: var(--am-accent);"
+                aria-label="Sugerir otro lugar para verificación">
+                Sugerir otro lugar
+            </button>
+
+            <br><br>
+            <img src="logo.png" alt="AcceMap Logo" width="80" style="opacity: 0.8;">
+        </div>
+    `;
 }
 
 function resetForm() {
@@ -50,7 +61,7 @@ function resetForm() {
 function shareAcceMap() {
     const emailUsuario = userEmailSaved;
     const shareUrl = window.location.href;
-    const shareText = `Vi barreras de accesibilidad y las reporté en AcceMap. ¿Ayudarías tú también?`;
+    const shareText = `¡Basta de sorpresas al llegar! 🚀 Estoy usando AcceMap para encontrar lugares realmente accesibles en la ciudad. Échale un ojo y dinos qué lugar deberíamos verificar por ti:`;
 
     // Formateamos el mensaje completo (Texto + 2 saltos de línea + URL)
     const fullMessage = `${shareText}\n\n${shareUrl}`;

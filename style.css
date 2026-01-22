@@ -39,7 +39,6 @@ body {
 .logo {
     width: 80px;
     height: 80px;
-    margin-bottom: 1.5rem;
     border-radius: 50%;
     border: 2px solid var(--am-accent);
 }
@@ -169,4 +168,20 @@ textarea {
     background: var(--am-accent);
     width: 25%;
     transition: 0.3s;
+}
+
+.small-text {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.spam-disclaimer {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
+    display: block;
 }

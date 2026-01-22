@@ -82,64 +82,132 @@
                 <!-- PASO 1: HERO + CATARSIS (Para todos) -->
                 <div class="step active" id="step1">
                     <img src="logo.png" alt="Logo AcceMap" class="logo" loading="lazy">
-                    <h1>No dejes que la ciudad detenga a nadie.</h1>
-                    <p>¿Has visto alguna barrera de accesibilidad en la ciudad últimamente? Elígela abajo:</p>
-                    <div class="grid">
-                        <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Ascensor malo')"
-                            aria-label="Un ascensor malo">🚫 Ascensor malo</div>
-                        <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Rampa bloqueada')"
-                            aria-label="Una rampa bloqueada">♿ Rampa bloqueada</div>
-                        <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Baño no apto')"
-                            aria-label="Un baño no apto">🚻 Baño no apto</div>
-                        <div class="btn-choice" role="button" tabindex="0"
-                            onclick="nextStep(1, 'Falta de estacionamiento PcD')"
-                            aria-label="Sin estacionamiento para personas con discapacidad">🅿️ Falta de
-                            estacionamiento PcD</div>
-                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Vereda en mal estado')"
-                            aria-label="Una vereda en mal estado">🚜 Vereda
-                            rota</button>
-                        <div class="btn-choice" role="button" tabindex="0" onclick="nextStep(1, 'Otro')"
-                            aria-label="Otra barrera de accesibilidad">🚧 Otra barrera</div>
+                    <h1 id="hero-heading">Encuentra tu lugar favorito, sin sorpresas al llegar</h1>
+                    <p id="hero-description">Estamos mapeando los lugares que ya eliminaron sus barreras. ¿Qué necesitas
+                        encontrar hoy?</p>
+
+                    <div class="grid" role="group" aria-labelledby="hero-description"
+                        aria-label="Selecciona el tipo de lugar que buscas">
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Cafe')"
+                            aria-label="Buscar cafeterías accesibles">☕ Un café</button>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Restaurante')"
+                            aria-label="Buscar restaurantes accesibles">🍽️ Un
+                            restaurante</button>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Tramites')"
+                            aria-label="Buscar oficinas de trámites y bancos accesibles">🗄️ Trámites /
+                            Bancos</button>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Cultura')"
+                            aria-label="Buscar lugares culturales y cines accesibles">🎭 Cultura /
+                            Cine</button>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Salud')"
+                            aria-label="Buscar centros de salud y clínicas accesibles">🏥 Salud /
+                            Clínicas</button>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Explorar')"
+                            aria-label="Buscar parques y plazas accesibles">🗺️ Parques y
+                            Plazas</button>
                     </div>
                     <input type="hidden" name="issue" id="issue-input">
                 </div>
 
                 <!-- PASO 2: VALIDACIÓN (Ajustada para víctimas y aliados) -->
-                <div class="step" id="step2">
-                    <label for="difficulty-select">En tu experiencia, ¿qué tan difícil es encontrar información
-                        confiable sobre la accesibilidad en tu entorno?</label>
-                    <select id="difficulty-select" name="difficulty" required aria-required="true">
-                        <option value="" disabled selected>Selecciona una opción</option>
-                        <option value="1">Es fácil, siempre hay datos</option>
-                        <option value="3">Es frustrante, hay que adivinar</option>
-                        <option value="5">Es una pesadilla, no hay información</option>
-                    </select>
+                <div class="step" id="step2" role="region" aria-labelledby="step2-heading">
+                    <h2 id="step2-heading" class="sr-only"
+                        style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+                        Cuéntanos tu experiencia con la accesibilidad</h2>
 
-                    <label for="would-use-select">¿Crees que un mapa colaborativo ayudaría a mejorar la movilidad en tu
-                        ciudad?</label>
-                    <select id="would-use-select" name="would_use" required aria-required="true">
-                        <option value="si">¡Absolutamente!</option>
-                        <option value="talvez">Podría servir</option>
-                        <option value="no">No lo creo necesario</option>
-                    </select>
+                    <fieldset style="border: none; padding: 0; margin: 0;">
+                        <legend class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+                            Preocupaciones sobre accesibilidad</legend>
 
-                    <button type="button" class="btn-next" onclick="nextStep(2)">Continuar</button>
+                        <label for="preocupacion-salida" class="form-label" id="preocupacion-label">
+                            Cuando planeas una salida, ¿qué es lo que más te preocupa?
+                        </label>
+                        <select id="preocupacion-salida" name="preocupacion" class="form-select" required
+                            aria-required="true" aria-labelledby="preocupacion-label"
+                            aria-describedby="preocupacion-hint">
+                            <option value="" disabled selected>Selecciona tu mayor preocupación</option>
+                            <option value="escalon">Encontrarme con escalones imprevistos</option>
+                            <option value="banio">Que el baño no sea realmente apto</option>
+                            <option value="espacio">Que el lugar sea muy estrecho</option>
+                            <option value="personal">La actitud del personal del lugar</option>
+                        </select>
+                        <span id="preocupacion-hint" class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo
+                            requerido. Selecciona la opción que mejor describe tu preocupación principal</span>
+                    </fieldset>
+
+                    <fieldset style="border: none; padding: 0; margin: 0;">
+                        <legend class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+                            Método actual para verificar accesibilidad</legend>
+
+                        <label for="metodo-actual" class="form-label" id="metodo-label">
+                            ¿Qué haces hoy si no estás seguro de la accesibilidad de un lugar?
+                        </label>
+                        <select id="metodo-actual" name="alternativa" class="form-select" required aria-required="true"
+                            aria-labelledby="metodo-label" aria-describedby="metodo-hint">
+                            <option value="" disabled selected>Selecciona cómo lo resuelves hoy</option>
+                            <option value="telefono">Llamo por teléfono antes de salir</option>
+                            <option value="google">Reviso fotos en Google / Street View</option>
+                            <option value="evitacion">Solo voy a lugares que ya conozco</option>
+                            <option value="riesgo">Me arriesgo y voy a ver qué pasa</option>
+                        </select>
+                        <span id="metodo-hint" class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo
+                            requerido. Selecciona tu método actual para verificar la accesibilidad</span>
+                    </fieldset>
+
+                    <button type="button" class="btn-next" onclick="nextStep(2)"
+                        aria-label="Continuar al tercer paso del formulario">Continuar</button>
                 </div>
 
                 <!-- PASO 3: CONVERSIÓN -->
-                <div class="step" id="step3">
-                    <label for="vent-textarea">¿Viste algo que te molestó o quieres contarnos por qué te importa la
-                        accesibilidad?</label>
-                    <textarea id="vent-textarea" name="vent" rows="3"
-                        placeholder="Tu historia ayuda a visibilizar el problema..."
-                        aria-label="Cuéntanos tu experiencia sobre accesibilidad"></textarea>
+                <div class="step" id="step3" role="region" aria-labelledby="step3-heading">
+                    <h2 id="step3-heading" class="sr-only"
+                        style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+                        Paso final: Únete a AcceMap</h2>
 
-                    <label for="email-input">Únete a la red de validadores. Déjanos tu email para avisarte cuando
-                        lancemos:</label>
-                    <input id="email-input" type="email" name="email" placeholder="tu@email.com" required
-                        aria-required="true" aria-label="Tu correo electrónico">
+                    <fieldset style="border: none; padding: 0; margin: 0;">
+                        <legend class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+                            Información del lugar a verificar</legend>
 
-                    <button type="submit" class="btn-next" id="submit-btn">Finalizar y Reportar</button>
+                        <label for="vent-textarea" class="form-label" id="lugar-label">
+                            ¿Qué lugar quieres que verifiquemos primero para ti?
+                        </label>
+                        <textarea id="vent-textarea" name="vent" rows="3"
+                            placeholder="Ej: Notaría X, calle Falsa 123..." aria-describedby="ayuda-verificacion"
+                            aria-labelledby="lugar-label"
+                            aria-label="Describe el lugar que deseas que verifiquemos"></textarea>
+                        <span id="ayuda-verificacion" class="small-text">Dinos el nombre y dirección del lugar que te
+                            genera
+                            dudas.</span>
+                    </fieldset>
+
+                    <fieldset style="border: none; padding: 0; margin: 0;">
+                        <legend class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+                            Suscripción a notificaciones</legend>
+
+                        <label for="email-input" class="form-label" id="email-label">
+                            Te avisaremos apenas tu zona esté lista para explorar
+                        </label>
+                        <input id="email-input" type="email" name="email" placeholder="tu@email.com" required
+                            aria-required="true" class="form-input" aria-labelledby="email-label"
+                            aria-describedby="email-hint spam-disclaimer"
+                            aria-label="Tu correo electrónico para recibir notificaciones">
+                        <span id="email-hint" class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo
+                            requerido. Ingresa un correo electrónico válido</span>
+                    </fieldset>
+
+                    <p class="spam-disclaimer" id="spam-disclaimer">Prometemos cero spam, solo libertad.</p>
+
+                    <button type="submit" class="btn-next" id="submit-btn"
+                        aria-label="Enviar formulario para obtener acceso anticipado a AcceMap">
+                        ¡Quiero acceso anticipado!
+                    </button>
                 </div>
             </form>
         </div>
