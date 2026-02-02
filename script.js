@@ -36,22 +36,30 @@ function showThankYouMessage(isRepeat) {
                 Este aún es un experimento, pero tu participación marca la diferencia.
             </p>
 
-            <!-- Botón de Compartir -->
+            <!-- Botón principal: Compartir -->
             <button class="btn-next" onclick="shareAcceMap()" 
                 style="background:#fff; color:#000; margin-bottom:12px;"
                 aria-label="Compartir esta iniciativa">
                 📢 Compartir el experimento
             </button>
 
-            <!-- Botón Repetir -->
-            <button class="btn-next" onclick="resetForm()"
-                style="background: transparent; border: 2px solid var(--am-accent); color: var(--am-accent);"
-                aria-label="Responder nuevamente">
-                Responder otra vez
-            </button>
+            ${!isRepeat ? `
+                <!-- Botón "Responder otra vez" solo para usuarios nuevos -->
+                <button class="btn-next" onclick="resetForm()"
+                    style="background: transparent; border: 2px solid var(--am-accent); color: var(--am-accent);"
+                    aria-label="Responder nuevamente">
+                    Responder otra vez
+                </button>
+            ` : ''}
 
             <br><br>
             <img src="logo.png" alt="AcceMap Logo" width="80" style="opacity: 0.8;">
+            
+            <!-- Link discreto para limpiar datos (útil para testing) -->
+            <p style="margin-top: 2rem; opacity: 0.4; font-size: 0.75rem;">
+                <a href="#" onclick="localStorage.clear(); location.reload(); return false;" 
+                   style="color: #888; text-decoration: none;">Limpiar mis datos</a>
+            </p>
         </div>
     `;
 }
