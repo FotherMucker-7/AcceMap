@@ -75,7 +75,7 @@ function shareAcceMap() {
         method: 'POST',
         body: new URLSearchParams({
             'timestamp': new Date().toISOString(),
-            'interest': 'INTENTO_COMPARTIR',
+            'interest': 'COMPARTIR',
             'email': emailUsuario
         })
     });
@@ -124,33 +124,39 @@ function shareAcceMap() {
     }
 }
 
-// Función auxiliar para no repetir código y evitar el alert feo
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        // En lugar de un alert, cambiaremos el texto del botón temporalmente
-        // Esto es MUCHO más profesional (Feedback Visual No Invasivo)
-        const shareBtn = document.querySelector('button[onclick="shareAcceMap()"]');
-        const originalText = shareBtn.innerHTML;
-        shareBtn.innerHTML = "✅ ¡Link copiado! Pégalo donde quieras";
-        shareBtn.style.background = "var(--am-accent)";
-        shareBtn.style.color = "var(--am-primary)";
 
-        setTimeout(() => {
-            shareBtn.innerHTML = originalText;
-            shareBtn.style.background = "#fff";
-            shareBtn.style.color = "#000";
-        }, 3000);
-    });
-}
 
 // 3. Navegación entre pasos
 let currentStep = 1;
 function nextStep(step, val) {
+    // Validación del paso 2 antes de avanzar al paso 3
+    if (step === 2) {
+        const preocupacion = document.getElementById('preocupacion-salida');
+        const metodo = document.getElementById('metodo-actual');
+
+        if (!preocupacion.value || !metodo.value) {
+            // Marcar visualmente el campo vacío
+            if (!preocupacion.value) {
+                preocupacion.style.borderColor = '#ef4444';
+                preocupacion.focus();
+            }
+            if (!metodo.value) {
+                metodo.style.borderColor = '#ef4444';
+                if (!preocupacion.value) metodo.focus();
+            }
+            return; // No avanzar si faltan campos
+        }
+
+        // Resetear bordes si todo está OK
+        preocupacion.style.borderColor = '';
+        metodo.style.borderColor = '';
+    }
+
     if (val) document.getElementById('place-interest').value = val;
     document.getElementById('step' + step).classList.remove('active');
     currentStep++;
     document.getElementById('step' + currentStep).classList.add('active');
-    const progressPercentage = currentStep * 33;
+    const progressPercentage = Math.round((currentStep / 3) * 100);
     const progressBar = document.getElementById('progress');
     progressBar.style.width = progressPercentage + '%';
     progressBar.setAttribute('aria-valuenow', progressPercentage);
@@ -167,11 +173,14 @@ form.addEventListener('submit', e => {
     e.preventDefault();
     userEmailSaved = form.querySelector('input[name="email"]').value; // GUARDAMOS EL EMAIL
     const btn = document.getElementById('submit-btn');
-    btn.innerText = 'ENVIANDO...';
+    btn.innerText = 'ENVIANDO RESPUESTAS...';
     btn.disabled = true;
 
     fetch(scriptURL, { method: 'POST', body: new FormData(form) })
         .then(response => {
+            // Verificar si el usuario ya había reportado antes
+            const isRepeatUser = localStorage.getItem('accemap_user_reported') === 'true';
+
             localStorage.setItem('accemap_user_reported', 'true');
             localStorage.setItem('accemap_user_email', userEmailSaved); // Guardar email en localStorage
 
@@ -180,7 +189,7 @@ form.addEventListener('submit', e => {
                 window.va('event', { name: 'reporte_completado' });
             }
 
-            showThankYouMessage(false);
+            showThankYouMessage(isRepeatUser);
         })
         .catch(error => {
             alert('Error de conexión. Inténtalo de nuevo.');
@@ -193,8 +202,8 @@ form.addEventListener('submit', e => {
 document.addEventListener('DOMContentLoaded', () => {
     // Agregar soporte de Enter y Space para todos los botones .btn-choice
     document.addEventListener('keydown', (e) => {
-        if (e.target.classList.contains('btn-choice') && e.target.hasAttribute('role')) {
-            // Enter (código 13) o Espacio (código 32)
+        if (e.target.classList.contains('btn-choice')) {
+            // Enter o Espacio
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault(); // Prevenir scroll con espacio
                 e.target.click(); // Simular click
