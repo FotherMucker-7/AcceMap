@@ -57,7 +57,8 @@ function showThankYouMessage(isRepeat) {
 }
 
 function resetForm() {
-    localStorage.removeItem('accemap_user_reported');
+    // No eliminamos 'accemap_user_reported' porque queremos que el sistema
+    // recuerde que este usuario ya reportó antes, para mostrar el mensaje correcto
     location.reload();
 }
 
