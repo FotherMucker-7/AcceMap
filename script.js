@@ -18,32 +18,36 @@ window.onload = () => {
 };
 
 function showThankYouMessage(isRepeat) {
-    // Definimos los mensajes basados en el nuevo enfoque de Design Thinking
+
     const title = isRepeat
-        ? "¡Hola de nuevo, guardián de la libertad!"
-        : "¡Todo listo! Tu próxima salida será mejor.";
+        ? "Gracias por seguir aportando 🙌"
+        : "Gracias por tu ayuda";
 
     const body = isRepeat
-        ? "Ya registramos tus nuevas sugerencias. Estamos mapeando la ciudad gracias a tu insistencia."
-        : "Hemos recibido tus lugares. Muy pronto verificaremos que sean 100% accesibles para que salgas con total autonomía.";
+        ? "Cada respuesta nos ayuda a entender mejor cómo las personas enfrentan la accesibilidad en la ciudad."
+        : "Tu experiencia nos ayuda a evaluar si realmente vale la pena construir una solución como esta.";
 
     container.innerHTML = `
         <div style="text-align:center; animation: fadeIn 0.5s;">
             <h1 style="color:var(--am-accent); font-size: 1.8rem;">${title}</h1>
             <p style="color:#cbd5e1; margin-bottom: 2rem;">${body}</p>
             
-            <!-- Botón de Compartir (Viral Loop) -->
+            <p style="font-size:0.9rem; opacity:0.8; margin-bottom: 1.5rem;">
+                Este aún es un experimento, pero tu participación marca la diferencia.
+            </p>
+
+            <!-- Botón de Compartir -->
             <button class="btn-next" onclick="shareAcceMap()" 
                 style="background:#fff; color:#000; margin-bottom:12px;"
-                aria-label="Compartir esta iniciativa con tus contactos">
-                📢 Invitar a un aliado
+                aria-label="Compartir esta iniciativa">
+                📢 Compartir el experimento
             </button>
 
-            <!-- Botón de Acción Repetida (Engagement) -->
+            <!-- Botón Repetir -->
             <button class="btn-next" onclick="resetForm()"
                 style="background: transparent; border: 2px solid var(--am-accent); color: var(--am-accent);"
-                aria-label="Sugerir otro lugar para verificación">
-                Sugerir otro lugar
+                aria-label="Responder nuevamente">
+                Responder otra vez
             </button>
 
             <br><br>
@@ -61,7 +65,7 @@ function resetForm() {
 function shareAcceMap() {
     const emailUsuario = userEmailSaved;
     const shareUrl = window.location.href;
-    const shareText = `¡Basta de sorpresas al llegar! 🚀 Estoy usando AcceMap para encontrar lugares realmente accesibles en la ciudad. Échale un ojo y dinos qué lugar deberíamos verificar por ti:`;
+    const shareText = `Estamos participando en un breve experimento sobre accesibilidad en la ciudad. Tu opinión puede ayudar a crear una mejor solución 🚀:`;
 
     // Formateamos el mensaje completo (Texto + 2 saltos de línea + URL)
     const fullMessage = `${shareText}\n\n${shareUrl}`;
@@ -71,7 +75,7 @@ function shareAcceMap() {
         method: 'POST',
         body: new URLSearchParams({
             'timestamp': new Date().toISOString(),
-            'issue': 'INTENTO_COMPARTIR',
+            'interest': 'INTENTO_COMPARTIR',
             'email': emailUsuario
         })
     });
@@ -142,11 +146,14 @@ function copyToClipboard(text) {
 // 3. Navegación entre pasos
 let currentStep = 1;
 function nextStep(step, val) {
-    if (val) document.getElementById('issue-input').value = val;
+    if (val) document.getElementById('place-interest').value = val;
     document.getElementById('step' + step).classList.remove('active');
     currentStep++;
     document.getElementById('step' + currentStep).classList.add('active');
-    document.getElementById('progress').style.width = (currentStep * 33) + '%';
+    const progressPercentage = currentStep * 33;
+    const progressBar = document.getElementById('progress');
+    progressBar.style.width = progressPercentage + '%';
+    progressBar.setAttribute('aria-valuenow', progressPercentage);
 
     // Actualizar indicador de paso
     const stepIndicatorSpan = document.getElementById('current-step');

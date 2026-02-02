@@ -4,73 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AcceMap | Tu ciudad sin barreras</title>
 
-    <!-- Meta Description para SEO -->
+    <title>AcceMap | Explorando accesibilidad urbana</title>
+
+    <!-- Meta Description -->
     <meta name="description"
-        content="¿Cansado de sorpresas al llegar? Encuentra tu próximo café, restaurante o trámite accesible con AcceMap. Planifica tu salida con total autonomía y sin barreras.">
+        content="Estamos explorando cómo reducir la incertidumbre sobre accesibilidad en la ciudad. Comparte tu experiencia y ayúdanos a evaluar una posible solución.">
 
-    <!-- Canonical URL -->
+    <!-- Canonical -->
     <link rel="canonical" href="https://accemap.vercel.app/">
 
-    <!-- Open Graph / Facebook / WhatsApp -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://accemap.vercel.app/">
-    <meta property="og:title" content="AcceMap | Que la ciudad no detenga a nadie">
-    <meta property="og:description" content="Encuentra lugares 100% accesibles. ¡Únete y mapeemos la libertad juntos!">
+    <meta property="og:title" content="AcceMap | Explorando soluciones de accesibilidad">
+    <meta property="og:description"
+        content="Un breve experimento para entender cómo las personas enfrentan la accesibilidad urbana. Tu experiencia ayuda.">
     <meta property="og:image" content="https://accemap.vercel.app/og_image3.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
-    <!-- Twitter Card -->
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AcceMap | Que la ciudad no detenga a nadie">
-    <meta name="twitter:description" content="Encuentra lugares 100% accesibles. ¡Únete y mapeemos la libertad juntos!">
+    <meta name="twitter:title" content="AcceMap | Explorando accesibilidad urbana">
+    <meta name="twitter:description"
+        content="Estamos evaluando cómo reducir la incertidumbre sobre accesibilidad en la ciudad. Participa en el experimento.">
     <meta name="twitter:image" content="https://accemap.vercel.app/og_image3.png">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="logo_2.png">
 
-    <!-- JSON-LD Structured Data -->
+    <!-- JSON-LD -->
     <script type="application/ld+json">
-    {
+        {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
+        "@type": "WebPage",
         "name": "AcceMap",
-        "description": "Plataforma colaborativa para encontrar lugares 100% accesibles",
+        "description": "Exploración para entender cómo las personas enfrentan la accesibilidad urbana",
         "url": "https://accemap.vercel.app/",
-        "applicationCategory": "UtilitiesApplication",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
-        },
-        "operatingSystem": "Web Browser",
-        "browserRequirements": "Requires JavaScript. Requires HTML5.",
-        "featureList": [
-            "Encuentra lugares 100% accesibles",
-            "Validación colaborativa de datos",
-            "Mapa interactivo de accesibilidad"
-        ],
+        "about": "Investigación sobre accesibilidad urbana",
         "audience": {
-            "@type": "Audience",
-            "audienceType": "Personas con discapacidad, cuidadores, y aliados de la accesibilidad"
+        "@type": "Audience",
+        "audienceType": "Público general interesado en accesibilidad"
         }
-    }
+        }
     </script>
 
-    <!-- La fuente que elegiste es ley en accesibilidad -->
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 
 <body>
 
     <main>
         <div class="card" id="app-container" aria-live="polite" aria-atomic="true">
             <div class="progress">
-                <div class="progress-bar" id="progress"></div>
+                <div class="progress-bar" id="progress" role="progressbar" aria-valuenow="33" aria-valuemin="0"
+                    aria-valuemax="100" aria-label="Progreso del formulario"></div>
             </div>
             <p id="step-indicator"
                 style="text-align: center; color: #cbd5e1; font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1.5rem;">
@@ -81,30 +73,35 @@
                 <!-- PASO 1: HERO + CATARSIS (Para todos) -->
                 <div class="step active" id="step1">
                     <img src="logo.png" alt="Logo AcceMap" class="logo" loading="lazy">
-                    <h1 id="hero-heading">Encuentra tu lugar favorito, sin sorpresas al llegar</h1>
-                    <p id="hero-description">Estamos mapeando los lugares que ya eliminaron sus barreras. ¿Qué necesitas
-                        encontrar hoy?</p>
+                    <h1 id="hero-heading">Planificar una salida no debería ser una apuesta.</h1>
 
-                    <div class="grid" role="group" aria-labelledby="hero-description"
-                        aria-label="Selecciona el tipo de lugar que buscas">
+                    <p id="hero-description">Estamos explorando cómo ayudar a las personas a moverse por la ciudad con
+                        menos incertidumbre sobre accesibilidad.</p>
+
+                    <p class="small-text">
+                        Esta es una breve exploración, no un servicio aún. Tu experiencia nos ayuda a entender mejor el
+                        problema.
+                    </p>
+
+                    <label class="form-label">
+                        ¿Qué tipo de lugar sueles buscar cuando sales?
+                    </label>
+
+                    <div class="grid" role="group" aria-label="Selecciona el tipo de lugar que buscas">
                         <button type="button" class="btn-choice" onclick="nextStep(1, 'Cafeterías')"
-                            aria-label="Buscar cafeterías accesibles">☕ Cafeterías</button>
-                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Restaurantes')"
-                            aria-label="Buscar restaurantes accesibles">🍽️ Restaurantes</button>
+                            aria-label="Buscar cafeterías accesibles">☕ Cafeterías / Restaurantes</button>
                         <button type="button" class="btn-choice" onclick="nextStep(1, 'Trámites y Bancos')"
-                            aria-label="Buscar oficinas de trámites y bancos accesibles">🗄️ Trámites /
-                            Bancos</button>
+                            aria-label="Buscar oficinas de trámites y bancos accesibles">🗄️ Trámites / Bancos</button>
                         <button type="button" class="btn-choice" onclick="nextStep(1, 'Cultura y Cine')"
-                            aria-label="Buscar lugares culturales y cines accesibles">🎭 Cultura /
-                            Cine</button>
+                            aria-label="Buscar lugares culturales y cines accesibles">🎭 Cultura / Cine</button>
                         <button type="button" class="btn-choice" onclick="nextStep(1, 'Salud y Clínicas')"
-                            aria-label="Buscar centros de salud y clínicas accesibles">🏥 Salud /
-                            Clínicas</button>
+                            aria-label="Buscar centros de salud y clínicas accesibles">🏥 Salud / Clínicas</button>
                         <button type="button" class="btn-choice" onclick="nextStep(1, 'Parques y Plazas')"
-                            aria-label="Buscar parques y plazas accesibles">🗺️ Parques y
-                            Plazas</button>
+                            aria-label="Buscar parques y plazas accesibles">🗺️ Parques / Plazas</button>
+                        <button type="button" class="btn-choice" onclick="nextStep(1, 'Explorando')"
+                            aria-label="Solo explorando la ciudad">🔎 Solo explorando</button>
                     </div>
-                    <input type="hidden" name="issue" id="issue-input">
+                    <input type="hidden" name="interest" id="place-interest">
                 </div>
 
                 <!-- PASO 2: VALIDACIÓN (Ajustada para víctimas y aliados) -->
@@ -119,16 +116,16 @@
                             Preocupaciones sobre accesibilidad</legend>
 
                         <label for="preocupacion-salida" class="form-label" id="preocupacion-label">
-                            Cuando planeas una salida, ¿qué es lo que más te preocupa?
+                            Cuando planeas una salida, ¿qué te preocupa más sobre la accesibilidad de un lugar?
                         </label>
                         <select id="preocupacion-salida" name="preocupacion" class="form-select" required
                             aria-required="true" aria-labelledby="preocupacion-label"
                             aria-describedby="preocupacion-hint">
-                            <option value="" disabled selected>Selecciona tu mayor preocupación</option>
-                            <option value="escalones_imprevistos">Encontrarme con escalones imprevistos</option>
+                            <option value="" disabled selected>Selecciona una opción</option>
                             <option value="banio_no_apto">Que el baño no sea realmente apto</option>
-                            <option value="espacio_estrecho">Que el lugar sea muy estrecho</option>
-                            <option value="personal_actitud">La actitud del personal del lugar</option>
+                            <option value="escalones_entrada">Encontrarme con escalones en la entrada</option>
+                            <option value="espacio_estrecho">Espacios muy estrechos</option>
+                            <option value="personal_actitud">La actitud del personal</option>
                         </select>
                         <span id="preocupacion-hint" class="sr-only"
                             style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo
@@ -141,15 +138,15 @@
                             Método actual para verificar accesibilidad</legend>
 
                         <label for="metodo-actual" class="form-label" id="metodo-label">
-                            ¿Qué haces hoy si no estás seguro de la accesibilidad de un lugar?
+                            Cuando no estás seguro de la accesibilidad, ¿qué haces hoy?
                         </label>
                         <select id="metodo-actual" name="alternativa" class="form-select" required aria-required="true"
                             aria-labelledby="metodo-label" aria-describedby="metodo-hint">
-                            <option value="" disabled selected>Selecciona cómo lo resuelves hoy</option>
-                            <option value="llamo_busco_antes">Llamo o busco en redes antes de salir</option>
+                            <option value="" disabled selected>Selecciona una opción</option>
                             <option value="google_fotos">Reviso fotos en Google / Street View</option>
+                            <option value="llamo_busco_antes">Llamo o busco en redes antes de salir</option>
                             <option value="lugares_conocidos">Solo voy a lugares que ya conozco</option>
-                            <option value="me_arriesgo">Me arriesgo y voy a ver qué pasa</option>
+                            <option value="me_arriesgo">Voy igual y veo qué pasa</option>
                         </select>
                         <span id="metodo-hint" class="sr-only"
                             style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo
@@ -160,26 +157,57 @@
                         aria-label="Continuar al tercer paso del formulario">Continuar</button>
                 </div>
 
-                <!-- PASO 3: CONVERSIÓN -->
+                <!-- PASO 3: VALIDACIÓN DE SOLUCIÓN -->
                 <div class="step" id="step3" role="region" aria-labelledby="step3-heading">
                     <h2 id="step3-heading" class="sr-only"
                         style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
-                        Paso final: Únete a AcceMap</h2>
+                        Validación de solución y suscripción</h2>
 
                     <fieldset style="border: none; padding: 0; margin: 0;">
                         <legend class="sr-only"
                             style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
-                            Información del lugar a verificar</legend>
+                            Solución preferida para reducir incertidumbre</legend>
 
-                        <label for="vent-textarea" class="form-label" id="lugar-label">
-                            ¿Hay algún lugar que te gustaría que verifiquemos por ti?
+                        <label for="solucion-preferida" class="form-label" id="solucion-label">
+                            Si existiera una forma de reducir esta incertidumbre, ¿cuál te sería más útil?
                         </label>
-                        <textarea id="vent-textarea" name="vent" rows="3"
-                            placeholder="Ej: Notaría X, calle Falsa 123..." aria-describedby="ayuda-verificacion"
-                            aria-labelledby="lugar-label"
-                            aria-label="Describe el lugar que deseas que verifiquemos"></textarea>
-                        <span id="ayuda-verificacion" class="small-text">Dinos el nombre y dirección del lugar que te
-                            genera dudas.</span>
+
+                        <select id="solucion-preferida" name="solucion" class="form-select" required
+                            aria-required="true" aria-labelledby="solucion-label" aria-describedby="solucion-hint">
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="mapa_lugares_accesibles">Un mapa con lugares accesibles validados por
+                                personas</option>
+                            <option value="comunidad_preguntar_experiencias">Una comunidad donde preguntar experiencias
+                            </option>
+                            <option value="servicio_verifique_lugares">Un servicio que verifique lugares por ti</option>
+                            <option value="redes_recomendaciones">Contenido en redes con recomendaciones</option>
+                        </select>
+
+                        <span id="solucion-hint" class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo
+                            requerido. Selecciona la solución que te sería más útil</span>
+                    </fieldset>
+
+                    <fieldset style="border: none; padding: 0; margin: 0;">
+                        <legend class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+                            Segmentación</legend>
+
+                        <label for="segmentacion" class="form-label" id="segmentacion-label">
+                            Este tema te afecta principalmente…
+                        </label>
+
+                        <select id="segmentacion" name="segmento" class="form-select" required aria-required="true"
+                            aria-labelledby="segmentacion-label" aria-describedby="segmentacion-hint">
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="directo_vida_diaria">Directamente en mi vida diaria</option>
+                            <option value="familiar_cercano">A un familiar o persona cercana</option>
+                            <option value="interes_accesibilidad">Me interesa el tema de accesibilidad</option>
+                        </select>
+
+                        <span id="segmentacion-hint" class="sr-only"
+                            style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">Campo
+                            requerido. Selecciona cómo te afecta este tema</span>
                     </fieldset>
 
                     <fieldset style="border: none; padding: 0; margin: 0;">
@@ -188,7 +216,8 @@
                             Suscripción a notificaciones</legend>
 
                         <label for="email-input" class="form-label" id="email-label">
-                            Te avisaremos apenas tu zona esté lista para explorar
+                            Estamos evaluando crear una solución basada en esto.
+                            Si quieres enterarte cuando exista, deja tu email.
                         </label>
                         <input id="email-input" type="email" name="email" placeholder="tu@email.com" required
                             aria-required="true" class="form-input" aria-labelledby="email-label"
@@ -199,11 +228,11 @@
                             requerido. Ingresa un correo electrónico válido</span>
                     </fieldset>
 
-                    <p class="spam-disclaimer" id="spam-disclaimer">Prometemos cero spam, solo libertad.</p>
+                    <p class="spam-disclaimer" id="spam-disclaimer">Sin spam. Solo novedades sobre el proyecto.</p>
 
                     <button type="submit" class="btn-next" id="submit-btn"
                         aria-label="Enviar formulario para obtener acceso anticipado a AcceMap">
-                        ¡Quiero acceso anticipado!
+                        Quiero acceso cuando esté disponible
                     </button>
                 </div>
             </form>
